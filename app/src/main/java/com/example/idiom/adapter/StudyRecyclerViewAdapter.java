@@ -18,9 +18,9 @@ public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecycler
     private List<Idiom> mListItem = new ArrayList<>();
 
     public interface ItemOnClickListener {
-        void itemOnClick();
+        void itemOnClick(Idiom idiom);
     }
-    ItemOnClickListener mListener;
+    private ItemOnClickListener mListener;
 
     public StudyRecyclerViewAdapter(ItemOnClickListener mListener) {
         this.mListener = mListener;
@@ -35,11 +35,11 @@ public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.study_recyclerview, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.itemOnClick();
+                mListener.itemOnClick(mListItem.get(holder.getAdapterPosition()));
             }
         });
         return holder;

@@ -2,31 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="@font/nanumsquareroundr"
+        android:text="苛斂誅求"
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
 
-        <TextView
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/nanumsquareroundr"
-            android:textSize="24sp"
-            android:text="苛斂誅求"
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음."
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_marginBottom="5dp"
-            android:textSize="16sp"
-            android:text="가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 </LinearLayout>

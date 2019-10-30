@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,17 +60,21 @@ public class StudyFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        final ShowDetailFragment showDetailFragment = new ShowDetailFragment();
         List<Idiom> dummyData = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            dummyData.add(new Idiom("苛斂誅求"+i , "가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음."));
+            dummyData.add(new Idiom("苛斂誅求"+i , "가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음.","가렴주구"));
         }
 
         RecyclerView recyclerView = view.findViewById(R.id.study_recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         final StudyRecyclerViewAdapter adapter = new StudyRecyclerViewAdapter(new StudyRecyclerViewAdapter.ItemOnClickListener() {
             @Override
-            public void itemOnClick() {
-                Toast.makeText(requireContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
+            public void itemOnClick(Idiom idiom) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("idi", idiom);
+                showDetailFragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.container_main, showDetailFragment).addToBackStack(null).commit();
             }
         });
 
