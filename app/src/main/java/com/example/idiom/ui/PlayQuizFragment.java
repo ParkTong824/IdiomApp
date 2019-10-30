@@ -10,9 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.idiom.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PlayQuizFragment extends Fragment {
 
 
