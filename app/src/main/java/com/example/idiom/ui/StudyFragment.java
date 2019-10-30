@@ -48,6 +48,7 @@ import java.util.List;
  정도를 지나침은 미치지 못한 것과 같다는 말.*/
 public class StudyFragment extends Fragment {
 
+    private ShowDetailFragment showDetailFragment;
     public StudyFragment() {
         // Required empty public constructor
     }
@@ -60,7 +61,9 @@ public class StudyFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final ShowDetailFragment showDetailFragment = new ShowDetailFragment();
+        showDetailFragment = new ShowDetailFragment();
+
+        //가짜데이터 삽입 테스트용
         List<Idiom> dummyData = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             dummyData.add(new Idiom("苛斂誅求"+i , "가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음.","가렴주구"));
@@ -68,7 +71,7 @@ public class StudyFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.study_recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
-        final StudyRecyclerViewAdapter adapter = new StudyRecyclerViewAdapter(new StudyRecyclerViewAdapter.ItemOnClickListener() {
+        StudyRecyclerViewAdapter adapter = new StudyRecyclerViewAdapter(new StudyRecyclerViewAdapter.ItemOnClickListener() {
             @Override
             public void itemOnClick(Idiom idiom) {
                 Bundle bundle = new Bundle();

@@ -20,5 +20,4 @@ public class PlayQuizFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_play_quiz, container, false);
     }
-
 }
