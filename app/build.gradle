@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.idiom"
-        minSdkVersion 14
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -28,5 +28,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //materialdesign
     implementation 'com.google.android.material:material:1.2.0-alpha01'
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    //recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

@@ -3,5 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="selector_bottom_nav_icon">#000000</color>
+
+    <color name="selectBottom">#64FFDA</color>
+    <color name="unSelectBottom">#77777E</color>
 </resources>
