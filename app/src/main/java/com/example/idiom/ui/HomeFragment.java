@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.idiom.R;
+import com.example.idiom.network.RetrofitInstance;
+import com.example.idiom.network.RetrofitService;
 
 public class HomeFragment extends Fragment {
 
@@ -26,8 +28,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Button startQuizButton = view.findViewById(R.id.start_quiz_button);
+        //TODO:서버요청보내기
+        RetrofitService retrofit = RetrofitInstance.getRetrofitInstance().create(RetrofitService.class);
 
+        Button startQuizButton = view.findViewById(R.id.start_quiz_button);
         startQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
