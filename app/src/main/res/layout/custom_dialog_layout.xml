@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#45454D">
+
+    <LinearLayout
+        android:background="#FF6363"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/dialog_imageView"
+            android:padding="10dp"
+            android:src="@drawable/angry"
+            android:layout_width="60dp"
+            android:layout_height="60dp"/>
+
+        <TextView
+            android:id="@+id/dialog_correct_result_textView"
+            android:text="학습이 필요해요!!"
+            android:textSize="22sp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/nanumsquareroundb"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_result_hanja"
+        android:textSize="35sp"
+        android:text="사자성어 한자"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/dialog_result_mean"
+        android:textSize="35sp"
+        android:text="뜻@@@@@@@@@@@@@@@@@@"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dialog_continue_button"
+        android:layout_margin="20dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/nanumsquareroundr"
+        android:textColor="#ffffff"
+        android:text="계 속 하 기"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="#64FFDA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
