@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "126249268690",
+    "firebase_url": "https://idiomapp-8e7df.firebaseio.com",
+    "project_id": "idiomapp-8e7df",
+    "storage_bucket": "idiomapp-8e7df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126249268690:android:2d30eeeee7e896b99f440b",
+        "android_client_info": {
+          "package_name": "com.example.idiom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126249268690-saq268vb33jtihnkhrnq9h2gjtbfj29k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.idiom",
+            "certificate_hash": "c5301594313dec69962ff86800ae9b3a3e1d3df9"
+          }
+        },
+        {
+          "client_id": "126249268690-ll6pqs861k2u7j9s6dfu2l20bhcsusnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmphWYPDlYTxvQyUhRo6OMeG7M4s-J6tY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126249268690-ll6pqs861k2u7j9s6dfu2l20bhcsusnp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

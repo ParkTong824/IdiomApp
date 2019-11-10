@@ -21,12 +21,12 @@ public class CustomDialog extends Dialog {
     TextView resultMeanTextView;
     Button resultContinueButton;
 
-    private View.OnClickListener mDialogClickListener;
+    private View.OnClickListener clickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //다이얼로그 밖의 화면은 흐리게 만들어줌
+
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount = 0.8f;
@@ -40,11 +40,11 @@ public class CustomDialog extends Dialog {
         resultTitleTextView = findViewById(R.id.dialog_result_hanja);
         resultMeanTextView = findViewById(R.id.dialog_result_mean);
 
-        resultContinueButton.setOnClickListener(mDialogClickListener);
+        resultContinueButton.setOnClickListener(clickListener);
     }
 
-    public CustomDialog(@NonNull Context context, View.OnClickListener dialogClickListener) {
+    CustomDialog(@NonNull Context context, View.OnClickListener mListener) {
         super(context);
-        this.mDialogClickListener = dialogClickListener;
+        this.clickListener = mListener;
     }
 }
