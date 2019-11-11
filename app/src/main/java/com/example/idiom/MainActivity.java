@@ -6,15 +6,21 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.idiom.model.Idioms;
 import com.example.idiom.ui.HomeFragment;
 import com.example.idiom.ui.StudyFragment;
+import com.example.idiom.util.MyfirebaseInstance;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private HomeFragment homeFragment;
     private StudyFragment studyFragment;
     private long backPressedTime = 0;
+    static List<Idioms> dataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        MyfirebaseInstance.getInstance();
+//        MyfirebaseInstance.getInstance().addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot idiomSnapshot : dataSnapshot.getChildren()) {
+//                    Idioms idioms = idiomSnapshot.getValue(Idioms.class);
+//                    dataList.add(idioms);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e("Firebase Error","onCancelled"+databaseError.toString());
+//            }
+//        });
+
         bottomNavigationView = findViewById(R.id.bottomNav);
         homeFragment = new HomeFragment();
         studyFragment = new StudyFragment();

@@ -9,16 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiom.R;
-import com.example.idiom.model.Idiom;
+import com.example.idiom.model.Idioms;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecyclerViewAdapter.ViewHolder> {
-    private List<Idiom> mListItem = new ArrayList<>();
+    private List<Idioms> mListItem = new ArrayList<>();
 
     public interface ItemOnClickListener {
-        void itemOnClick(Idiom idiom);
+        void itemOnClick(Idioms idiom);
     }
     private ItemOnClickListener mListener;
 
@@ -26,7 +26,7 @@ public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecycler
         this.mListener = mListener;
     }
 
-    public void setItems(List<Idiom> items){
+    public void setItems(List<Idioms> items){
         mListItem = items;
         notifyDataSetChanged();
     }
@@ -47,7 +47,7 @@ public class StudyRecyclerViewAdapter extends RecyclerView.Adapter<StudyRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Idiom idiom = mListItem.get(position);
+        Idioms idiom = mListItem.get(position);
         holder.content.setText(idiom.getMean());
         holder.title.setText(idiom.getTitle());
     }

@@ -39,13 +39,13 @@ public class PlayQuizFragment extends Fragment {
         quiz_menu3 = view.findViewById(R.id.quiz_menu_3);
         quiz_menu4 = view.findViewById(R.id.quiz_menu_4);
 
-        customDialog.show();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         customDialog = new CustomDialog(requireContext(), dialogListener);
+        customDialog.show();
     }
 
 

@@ -14,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.idiom.R;
 import com.example.idiom.adapter.StudyRecyclerViewAdapter;
-import com.example.idiom.model.Idiom;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.idiom.model.Idioms;
+import com.example.idiom.util.MyfirebaseInstance;
 
 /*
 苛斂誅求 가렴주구
@@ -63,17 +61,11 @@ public class StudyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         showDetailFragment = new ShowDetailFragment();
 
-        //가짜데이터 삽입 테스트용
-        List<Idiom> dummyData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            dummyData.add(new Idiom("苛斂誅求"+i , "가혹하게 세금을 거두거나 백성들의 재물을 억지로 빼앗음.","가렴주구"));
-        }
-
         RecyclerView recyclerView = view.findViewById(R.id.study_recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         StudyRecyclerViewAdapter adapter = new StudyRecyclerViewAdapter(new StudyRecyclerViewAdapter.ItemOnClickListener() {
             @Override
-            public void itemOnClick(Idiom idiom) {
+            public void itemOnClick(Idioms idiom) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("idi", idiom);
                 showDetailFragment.setArguments(bundle);
@@ -82,6 +74,6 @@ public class StudyFragment extends Fragment {
         });
 
         recyclerView.setAdapter(adapter);
-        adapter.setItems(dummyData);
+        adapter.setItems(MyfirebaseInstance.idiomsList);
     }
 }

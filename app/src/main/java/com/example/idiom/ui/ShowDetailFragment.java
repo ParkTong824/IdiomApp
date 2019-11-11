@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.idiom.R;
-import com.example.idiom.model.Idiom;
+import com.example.idiom.model.Idioms;
 
 public class ShowDetailFragment extends Fragment {
 
@@ -31,12 +31,12 @@ public class ShowDetailFragment extends Fragment {
         TextView korean = view.findViewById(R.id.korean);
         TextView mean = view.findViewById(R.id.mean);
 
-        Idiom idiom;
+        Idioms idiom;
         if (getArguments() != null) {
-            idiom = (Idiom) getArguments().getSerializable("idi");
+            idiom = (Idioms) getArguments().getSerializable("idi");
             if (idiom != null) {
                 title.setText(idiom.getTitle());
-                korean.setText(idiom.getKorean());
+                korean.setText(idiom.getId());
                 mean.setText(idiom.getMean());
             }
         }
