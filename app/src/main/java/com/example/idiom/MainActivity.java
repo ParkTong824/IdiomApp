@@ -6,22 +6,18 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.idiom.model.Idioms;
+import com.example.idiom.ui.CardStudyFragment;
 import com.example.idiom.ui.HomeFragment;
 import com.example.idiom.ui.StudyFragment;
 import com.example.idiom.util.MyfirebaseInstance;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private HomeFragment homeFragment;
     private StudyFragment studyFragment;
     private long backPressedTime = 0;
-    static List<Idioms> dataList = new ArrayList<>();
-
+    private CardStudyFragment cardStudyFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, homeFragment).commit();
                         break;
                     case R.id.second_bottom:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, studyFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, cardStudyFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, studyFragment).commit();
                         break;
                 }
                 return false;
@@ -47,24 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         MyfirebaseInstance.getInstance();
-//        MyfirebaseInstance.getInstance().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot idiomSnapshot : dataSnapshot.getChildren()) {
-//                    Idioms idioms = idiomSnapshot.getValue(Idioms.class);
-//                    dataList.add(idioms);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.e("Firebase Error","onCancelled"+databaseError.toString());
-//            }
-//        });
-
         bottomNavigationView = findViewById(R.id.bottomNav);
         homeFragment = new HomeFragment();
         studyFragment = new StudyFragment();
+        cardStudyFragment = new CardStudyFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, homeFragment).commit();
     }
 

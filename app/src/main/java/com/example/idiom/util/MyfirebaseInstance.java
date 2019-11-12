@@ -12,13 +12,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyfirebaseInstance {
 
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference("idioms");
-    public static List<Idioms> idiomsList = new ArrayList<>();
+    public static ArrayList<Idioms> idiomsList = new ArrayList<>();
 
     public static DatabaseReference getInstance() {
         if (myRef == null) {

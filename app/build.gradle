@@ -41,5 +41,9 @@ dependencies {
 
     //firebase db
     implementation 'com.google.firebase:firebase-database:19.1.0'
+
+    //cardstackview
+    implementation 'com.yuyakaido.android:card-stack-view:2.3.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

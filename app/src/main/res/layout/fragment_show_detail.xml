@@ -9,28 +9,31 @@
     tools:context=".ui.ShowDetailFragment">
 
     <LinearLayout
-        android:layout_marginTop="80dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:padding="10dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
+            android:id="@+id/korean"
+            android:gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:fontFamily="@font/nanumsquareroundr"
-            android:textSize="22sp" />
+            android:textSize="33sp" />
 
         <TextView
-            android:id="@+id/korean"
-            android:gravity="left"
-            android:layout_width="0dp"
+            android:id="@+id/title"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:fontFamily="@font/nanumsquareroundr"
-            android:textSize="22sp" />
+            android:textSize="33sp" />
+
     </LinearLayout>
 
     <TextView
@@ -40,5 +43,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanumsquareroundb"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 </LinearLayout>
