@@ -54,6 +54,12 @@ public class CardStackViewAdapter extends RecyclerView.Adapter<CardStackViewAdap
         this.mIdiomList = mIdiomList;
     }
 
+    public void shuffleIdiomList(ArrayList<Idioms> mIdiomList) {
+        this.mIdiomList.clear();
+        this.mIdiomList.addAll(mIdiomList);
+        notifyDataSetChanged();
+    }
+
     class CardViewHolder extends RecyclerView.ViewHolder {
         TextView id;
         TextView title;

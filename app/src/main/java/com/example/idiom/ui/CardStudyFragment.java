@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +32,7 @@ import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +45,8 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
     private TextView cardStackTotal;
     private TextView curStackView;
 
+    private ArrayList<Idioms> shuffledList;
+
     private int position = 0;
 
     public CardStudyFragment() {
@@ -51,6 +58,7 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         adapter = new CardStackViewAdapter(MyfirebaseInstance.idiomsList,getActivity());
+        shuffledList = new ArrayList<>(MyfirebaseInstance.idiomsList);
         return inflater.inflate(R.layout.fragment_card_study, container, false);
     }
 
@@ -59,9 +67,34 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
         super.onViewCreated(view, savedInstanceState);
         manager = new CardStackLayoutManager(getActivity(),this);
         cardStackView = view.findViewById(R.id.stackView);
-        curStackView = view.findViewById(R.id.cardStack_current_position);
-        cardStackTotal = view.findViewById(R.id.cardStack_total_position);
+        cardStackTotal = view.findViewById(R.id.totalPositionTextView);
+        curStackView = view.findViewById(R.id.curPositionTextView);
+        cardStackTotal.setText(String.valueOf(MyfirebaseInstance.idiomsList.size()));
+        curStackView.setText(String.valueOf(position));
+        final ImageView rewindImage = view.findViewById(R.id.rewind_imageView);
+        rewindImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cardStackView.rewind();
+                Animation anim = AnimationUtils.loadAnimation(
+                        getContext(),
+                        R.anim.rotate);
+                rewindImage.startAnimation(anim);
+            }
+        });
         initialize();
+
+        ImageView shuffleImage = view.findViewById(R.id.shuffle_button);
+        shuffleImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "카드섞기완료", Toast.LENGTH_SHORT).show();
+                Collections.shuffle(shuffledList);
+                adapter.shuffleIdiomList(shuffledList);
+                position = 0;
+                curStackView.setText(String.valueOf(position));
+            }
+        });
     }
 
     private void initialize() {
@@ -76,7 +109,6 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
         manager.setCanScrollVertical(true);
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual);
         manager.setOverlayInterpolator(new LinearInterpolator());
-        cardStackTotal.setText(String.valueOf(adapter.getItemCount()));
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
         cardStackView.setItemAnimator(new DefaultItemAnimator());
@@ -84,22 +116,14 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-        Log.e("CardStackView","onCardDragging"+direction.name()+","+ratio);
+//        Log.e("CardStackView","onCardDragging"+direction.name()+","+ratio);
     }
 
     @Override
     public void onCardSwiped(Direction direction) {
-        switch (direction.name()) {
-            case "Left" :
-                position--;
-                curStackView.setText(String.valueOf(position));
-                break;
-            case "Right" :
-                position++;
-                curStackView.setText(String.valueOf(position));
-                break;
-        }
-
+        position++;
+        curStackView.setText(String.valueOf(position));
+        Log.e("swipe","position->"+position);
         if (manager.getTopPosition() == adapter.getItemCount() - 5) {
             paginate();
         }
@@ -116,7 +140,9 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardRewound() {
-        Log.e("CardStackView", "onCardRewound: ${manager.topPosition}");
+        position--;
+        curStackView.setText(String.valueOf(position));
+        Log.e("CardStackView", "onCardRewound: position->"+position);
     }
 
     @Override

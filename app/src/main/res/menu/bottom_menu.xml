@@ -4,9 +4,9 @@
     <item
         android:id="@+id/first_bottom"
         android:icon="@drawable/home_24dp"
-        android:title="Home" />
+        android:title="Quiz" />
     <item
         android:id="@+id/second_bottom"
         android:icon="@drawable/pen_24dp"
-        android:title="Quiz" />
+        android:title="Study" />
 </menu>
