@@ -33,7 +33,6 @@ public class PlayQuizFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_play_quiz, container, false);
         //보기 선택할때 마다 맞는지 틀렸는지 dialog 에 표현해야됨
-
         quiz_menu1 = view.findViewById(R.id.quiz_menu_1);
         quiz_menu2 = view.findViewById(R.id.quiz_menu_2);
         quiz_menu3 = view.findViewById(R.id.quiz_menu_3);

@@ -4,31 +4,25 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.idiom.ui.CardStudyFragment;
 import com.example.idiom.ui.HomeFragment;
 import com.example.idiom.ui.StudyFragment;
 import com.example.idiom.util.MyfirebaseInstance;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private BottomNavigationView bottomNavigationView;
-    private HomeFragment homeFragment;
     private StudyFragment studyFragment;
     private long backPressedTime = 0;
-    private CardStudyFragment cardStudyFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
     }
 
     private void initView() {
         MyfirebaseInstance.getInstance();
-        homeFragment = new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
         studyFragment = new StudyFragment();
-        cardStudyFragment = new CardStudyFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_frame, homeFragment).commit();
     }
 

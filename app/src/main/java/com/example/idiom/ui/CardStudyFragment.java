@@ -41,9 +41,10 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
 
     private CardStackLayoutManager manager;
     private CardStackViewAdapter adapter;
-
-    private TextView cardStackTotal;
     private TextView curStackView;
+    private TextView cardStackTotal;
+    private ImageView rewindImage;
+    private ImageView shuffleImage;
 
     private ArrayList<Idioms> shuffledList;
 
@@ -52,26 +53,26 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
     public CardStudyFragment() {
         // Required empty public constructor
     }
+
     private CardStackView cardStackView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        adapter = new CardStackViewAdapter(MyfirebaseInstance.idiomsList,getActivity());
-        shuffledList = new ArrayList<>(MyfirebaseInstance.idiomsList);
+        setupData();
         return inflater.inflate(R.layout.fragment_card_study, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        manager = new CardStackLayoutManager(getActivity(),this);
-        cardStackView = view.findViewById(R.id.stackView);
-        cardStackTotal = view.findViewById(R.id.totalPositionTextView);
-        curStackView = view.findViewById(R.id.curPositionTextView);
+        setUpManager();
+        initView(view);
+        initialize();
+
         cardStackTotal.setText(String.valueOf(MyfirebaseInstance.idiomsList.size()));
         curStackView.setText(String.valueOf(position));
-        final ImageView rewindImage = view.findViewById(R.id.rewind_imageView);
+
         rewindImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,9 +83,7 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
                 rewindImage.startAnimation(anim);
             }
         });
-        initialize();
 
-        ImageView shuffleImage = view.findViewById(R.id.shuffle_button);
         shuffleImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +94,23 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
                 curStackView.setText(String.valueOf(position));
             }
         });
+    }
+
+    private void setUpManager() {
+        manager = new CardStackLayoutManager(getActivity(), this);
+    }
+
+    private void setupData() {
+        adapter = new CardStackViewAdapter(MyfirebaseInstance.idiomsList, getActivity());
+        shuffledList = new ArrayList<>(MyfirebaseInstance.idiomsList);
+    }
+
+    private void initView(View view) {
+        cardStackTotal = view.findViewById(R.id.totalPositionTextView);
+        cardStackView = view.findViewById(R.id.stackView);
+        curStackView = view.findViewById(R.id.curPositionTextView);
+        rewindImage = view.findViewById(R.id.rewind_imageView);
+        shuffleImage = view.findViewById(R.id.shuffle_button);
     }
 
     private void initialize() {
@@ -116,14 +132,12 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardDragging(Direction direction, float ratio) {
-//        Log.e("CardStackView","onCardDragging"+direction.name()+","+ratio);
     }
 
     @Override
     public void onCardSwiped(Direction direction) {
         position++;
         curStackView.setText(String.valueOf(position));
-        Log.e("swipe","position->"+position);
         if (manager.getTopPosition() == adapter.getItemCount() - 5) {
             paginate();
         }
@@ -142,7 +156,7 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
     public void onCardRewound() {
         position--;
         curStackView.setText(String.valueOf(position));
-        Log.e("CardStackView", "onCardRewound: position->"+position);
+        Log.e("CardStackView", "onCardRewound: position->" + position);
     }
 
     @Override
@@ -152,13 +166,11 @@ public class CardStudyFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardAppeared(View view, int position) {
-        TextView textView = view.findViewById(R.id.title);
         Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}");
     }
 
     @Override
     public void onCardDisappeared(View view, int position) {
-        TextView textView = view.findViewById(R.id.id);
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}");
     }
 }

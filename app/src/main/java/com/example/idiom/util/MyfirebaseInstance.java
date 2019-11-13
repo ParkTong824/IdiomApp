@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class MyfirebaseInstance {
 
-    static FirebaseDatabase database = FirebaseDatabase.getInstance();
-    static DatabaseReference myRef = database.getReference("idioms");
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private static DatabaseReference myRef = database.getReference("idioms");
     public static ArrayList<Idioms> idiomsList = new ArrayList<>();
 
     public static DatabaseReference getInstance() {
@@ -28,7 +28,7 @@ public class MyfirebaseInstance {
         return myRef;
     }
 
-    static void addIdiomListData() {
+    private static void addIdiomListData() {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -40,7 +40,7 @@ public class MyfirebaseInstance {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("Firebase Error","onCancelled"+databaseError.toString());
+                Log.e("FireBase Error","onCancelled"+databaseError.toString());
             }
         });
     }
