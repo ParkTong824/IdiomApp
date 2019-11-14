@@ -34,6 +34,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/quiz_textView"
         android:fontFamily="@font/nanumsquareroundb"
         android:text="肝膽相照"
         android:textSize="60sp"
