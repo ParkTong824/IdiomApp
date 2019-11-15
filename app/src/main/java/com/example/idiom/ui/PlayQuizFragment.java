@@ -17,6 +17,7 @@ import com.example.idiom.R;
 import com.example.idiom.model.Idioms;
 import com.example.idiom.util.MyfirebaseInstance;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +36,7 @@ public class PlayQuizFragment extends Fragment {
     private Idioms correctIdiom;
 
     private int correctIndex;
+    private int solveCounter;
 
     public PlayQuizFragment() {
     }
@@ -84,7 +86,6 @@ public class PlayQuizFragment extends Fragment {
         return makeQuizList.get(randomChoice);
     }
 
-
     private List<Idioms> getRandomQuestion(Idioms idioms) {
         List<Idioms> titleList = new ArrayList<>();
         while (titleList.size() < 3) {
@@ -97,6 +98,7 @@ public class PlayQuizFragment extends Fragment {
     }
 
     private void init(View view) {
+        solveCounter = 0;
         buttonList = new ArrayList<>();
         buttonList.add(quiz_menu1 = view.findViewById(R.id.quiz_menu_1));
         buttonList.add(quiz_menu2 = view.findViewById(R.id.quiz_menu_2));
@@ -109,12 +111,12 @@ public class PlayQuizFragment extends Fragment {
         incorrectDialog = new IncorrectDialog(requireContext(), incorrectListener);
     }
 
-
     private View.OnClickListener correctListener = new View.OnClickListener() {
         public void onClick(View v) {
             final Idioms idioms = settingCorrect();
             settingOptions(idioms);
             correctDialog.dismiss();
+            solveCounter++;
         }
     };
 
@@ -124,8 +126,18 @@ public class PlayQuizFragment extends Fragment {
             final Idioms idioms = settingCorrect();
             settingOptions(idioms);
             incorrectDialog.dismiss();
+            solveCounter++;
         }
     };
+
+    @Override
+    public void onDestroy() {
+        SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월 dd일 HH시mm분ss초");
+        String format_time2 = format2.format (System.currentTimeMillis());
+        Log.e("fragment","destroy! "+format_time2 + "남은문제- "+(makeQuizList.size() - solveCounter) + " ,푼문제 "+solveCounter);
+        Log.e("fragment","destroy! "+makeQuizList);
+        super.onDestroy();
+    }
 
     class OptionListener implements View.OnClickListener {
 
@@ -138,11 +150,9 @@ public class PlayQuizFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if (idx == correctIndex) {
-                Log.e("data correct",""+correctIdiom);
                 correctDialog.show();
                 correctDialog.settingDialogView(correctIdiom);
             } else {
-                Log.e("data incorrect",""+optionList.get(idx));
                 incorrectDialog.show();
                 incorrectDialog.settingDialogView(correctIdiom, optionList.get(idx));
             }
