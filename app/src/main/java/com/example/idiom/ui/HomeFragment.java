@@ -2,7 +2,6 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,8 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
+    private PlayQuizFragment playQuizFragment = new PlayQuizFragment();
+
     public HomeFragment() {
     }
 
@@ -43,13 +44,15 @@ public class HomeFragment extends Fragment {
         startQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new PlayQuizFragment()).addToBackStack(null).commit();
+                //문제풀기 시작 버튼
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, playQuizFragment).addToBackStack(null).commit();
             }
         });
 
         startStudyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //공부하기 시작 버튼
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new CardStudyFragment()).addToBackStack(null).commit();
             }
         });
@@ -57,15 +60,33 @@ public class HomeFragment extends Fragment {
         final SavedQuizRecyclerAdapter adapter = new SavedQuizRecyclerAdapter(new SavedQuizRecyclerAdapter.ItemOnClickListener() {
             @Override
             public void itemOnClick(SaveIdioms idiom) {
-                //firebase 에 지우고 뷰모델 갱신
+                //데이터베이스에 지우고 뷰모델 갱신
                 MyfirebaseInstance.deleteIdiom(idiom.key);
                 ArrayList<SaveIdioms> temp = SaveViewModel.saveIdiomsMutableLiveData.getValue();
-                temp.remove(idiom);
+                if (temp != null) {
+                    temp.remove(idiom);
+                }
                 SaveViewModel.saveIdiomsMutableLiveData.setValue(temp);
             }
         });
 
         savedRecyclerView.setAdapter(adapter);
+
+
+        //TODO: 문제 다시풀때 데이터베이스에 덮어씌우기 !
+        adapter.setSaveItemOnClickListener(
+                new SavedQuizRecyclerAdapter.SaveItemOnClickListener() {
+                    @Override
+                    public void saveItemOnClick(SaveIdioms saveIdioms) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("idi", saveIdioms);
+                        playQuizFragment.setArguments(bundle);
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, playQuizFragment).addToBackStack(null).commit();
+                    }
+                }
+        );
+
 
         SaveViewModel.saveIdiomsMutableLiveData.observe(this, new Observer<ArrayList<SaveIdioms>>() {
             @Override

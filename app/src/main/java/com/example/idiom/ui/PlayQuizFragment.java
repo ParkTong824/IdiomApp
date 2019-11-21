@@ -2,6 +2,7 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,14 @@ public class PlayQuizFragment extends Fragment {
 
         for (int i = 0; i < buttonList.size(); i++) {
             buttonList.get(i).setOnClickListener(new OptionListener(i));
+        }
+
+        SaveIdioms bundleIdioms;
+        if (getArguments() != null) {
+            bundleIdioms = (SaveIdioms) getArguments().getSerializable("idi");
+            if (bundleIdioms != null) {
+                Log.e("get bundle", "" + bundleIdioms.toString());
+            }
         }
     }
 
@@ -122,7 +131,7 @@ public class PlayQuizFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener incorrectListener = new View.OnClickListener(){
+    private View.OnClickListener incorrectListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             final Idioms idioms = settingCorrect();
@@ -134,12 +143,12 @@ public class PlayQuizFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월 dd일 HH시mm분ss초");
-        String format_time2 = format2.format (System.currentTimeMillis());
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy년 MM월 dd일 HH시mm분ss초");
+        String format_time2 = format2.format(System.currentTimeMillis());
 
         String key = MyfirebaseInstance.getSaveInstance().push().getKey();
         if (key != null) {
-            MyfirebaseInstance.getSaveInstance().child(key).setValue(new SaveIdioms(key, makeQuizList,solveCounter, (makeQuizList.size() - solveCounter),format_time2));
+            MyfirebaseInstance.getSaveInstance().child(key).setValue(new SaveIdioms(key, makeQuizList, solveCounter, (makeQuizList.size() - solveCounter), format_time2));
             MyfirebaseInstance.getSavedQuiz();
         }
         Objects.requireNonNull(SaveViewModel.saveIdiomsMutableLiveData.getValue()).clear();
