@@ -2,7 +2,6 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.idiom.R;
 import com.example.idiom.model.Idioms;
+import com.example.idiom.model.SaveIdioms;
+import com.example.idiom.model.SaveViewModel;
 import com.example.idiom.util.MyfirebaseInstance;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayQuizFragment extends Fragment {
     private Button quiz_menu1, quiz_menu2, quiz_menu3, quiz_menu4;
@@ -134,8 +136,13 @@ public class PlayQuizFragment extends Fragment {
     public void onDestroy() {
         SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월 dd일 HH시mm분ss초");
         String format_time2 = format2.format (System.currentTimeMillis());
-        Log.e("fragment","destroy! "+format_time2 + "남은문제- "+(makeQuizList.size() - solveCounter) + " ,푼문제 "+solveCounter);
-        Log.e("fragment","destroy! "+makeQuizList);
+
+        String key = MyfirebaseInstance.getSaveInstance().push().getKey();
+        if (key != null) {
+            MyfirebaseInstance.getSaveInstance().child(key).setValue(new SaveIdioms(key, makeQuizList,solveCounter, (makeQuizList.size() - solveCounter),format_time2));
+            MyfirebaseInstance.getSavedQuiz();
+        }
+        Objects.requireNonNull(SaveViewModel.saveIdiomsMutableLiveData.getValue()).clear();
         super.onDestroy();
     }
 
