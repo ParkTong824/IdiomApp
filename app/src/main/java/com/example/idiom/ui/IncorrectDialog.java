@@ -3,7 +3,6 @@ package com.example.idiom.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +50,6 @@ public class IncorrectDialog extends Dialog {
 
 
     void settingDialogView(Idioms incorrectIdiom, Idioms selectIdiom) {
-        Log.e("at dialog incorrect",""+incorrectIdiom);
         incorrectTitle.setText(incorrectIdiom.getTitle());
         incorrectId.setText(incorrectIdiom.getId());
         incorrectMean.setText(incorrectIdiom.getMean());

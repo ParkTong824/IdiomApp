@@ -2,10 +2,12 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +25,8 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private PlayQuizFragment playQuizFragment = new PlayQuizFragment();
+    private PlayQuizFragment playQuizFragment;
+    private Bundle bundle;
 
     public HomeFragment() {
     }
@@ -40,11 +43,17 @@ public class HomeFragment extends Fragment {
         Button startQuizButton = view.findViewById(R.id.start_quiz_button);
         Button startStudyButton = view.findViewById(R.id.start_study_button);
         RecyclerView savedRecyclerView = view.findViewById(R.id.saved_quiz_recyclerView);
+        final TextView saveQuizTitle = view.findViewById(R.id.saved_Quiz_title);
+        bundle = new Bundle();
+        playQuizFragment = new PlayQuizFragment();
 
         startQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //문제풀기 시작 버튼
+                bundle = new Bundle();
+                bundle.putBoolean("flag", false);
+                playQuizFragment.setArguments(bundle);
                 requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, playQuizFragment).addToBackStack(null).commit();
             }
         });
@@ -72,14 +81,13 @@ public class HomeFragment extends Fragment {
 
         savedRecyclerView.setAdapter(adapter);
 
-
-        //TODO: 문제 다시풀때 데이터베이스에 덮어씌우기 !
         adapter.setSaveItemOnClickListener(
                 new SavedQuizRecyclerAdapter.SaveItemOnClickListener() {
                     @Override
                     public void saveItemOnClick(SaveIdioms saveIdioms) {
 
-                        Bundle bundle = new Bundle();
+                        bundle = new Bundle();
+                        bundle.putBoolean("flag", true);
                         bundle.putSerializable("idi", saveIdioms);
                         playQuizFragment.setArguments(bundle);
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_main, playQuizFragment).addToBackStack(null).commit();
@@ -91,6 +99,11 @@ public class HomeFragment extends Fragment {
         SaveViewModel.saveIdiomsMutableLiveData.observe(this, new Observer<ArrayList<SaveIdioms>>() {
             @Override
             public void onChanged(ArrayList<SaveIdioms> saveIdioms) {
+                if (saveIdioms.size() > 0) {
+                    saveQuizTitle.setVisibility(View.VISIBLE);
+                } else {
+                    saveQuizTitle.setVisibility(View.GONE);
+                }
                 adapter.setSavedList(saveIdioms);
             }
         });

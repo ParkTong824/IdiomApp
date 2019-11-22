@@ -38,9 +38,10 @@
                 android:text="문제풀기"
                 android:fontFamily="@font/nanumsquareroundr"
                 android:textColor="#ffffff"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="12dp"
                 app:strokeColor="#64FFDA"
@@ -52,6 +53,20 @@
 
     <include
         layout="@layout/go_to_study_layout"/>
+
+    <TextView
+        android:id="@+id/saved_Quiz_title"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nanumsquareroundb"
+        android:text="내가 풀던 문제"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/saved_quiz_recyclerView"

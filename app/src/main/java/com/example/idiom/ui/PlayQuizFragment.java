@@ -41,6 +41,9 @@ public class PlayQuizFragment extends Fragment {
     private int correctIndex;
     private int solveCounter;
 
+    private boolean isSavedQuiz = false;
+    private SaveIdioms bundleIdioms;
+
     public PlayQuizFragment() {
     }
 
@@ -54,18 +57,24 @@ public class PlayQuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        final Idioms idioms = settingCorrect();
-        settingOptions(idioms);
-
         for (int i = 0; i < buttonList.size(); i++) {
             buttonList.get(i).setOnClickListener(new OptionListener(i));
         }
 
-        SaveIdioms bundleIdioms;
         if (getArguments() != null) {
             bundleIdioms = (SaveIdioms) getArguments().getSerializable("idi");
-            if (bundleIdioms != null) {
-                Log.e("get bundle", "" + bundleIdioms.toString());
+            isSavedQuiz = getArguments().getBoolean("flag");
+            if (isSavedQuiz) { // 풀던 문제에서 문제 시작할때
+                Log.e("풀던거", "if!");
+                makeQuizList = bundleIdioms.quizList;
+                Idioms idioms = settingCorrect();
+                settingOptions(idioms);
+            } else {
+                // 문제풀기 버튼으로 문제 시작할때
+                Log.e("문제풀기", "else!");
+                setQuizList();
+                final Idioms idioms = settingCorrect();
+                settingOptions(idioms);
             }
         }
     }
@@ -116,10 +125,13 @@ public class PlayQuizFragment extends Fragment {
         buttonList.add(quiz_menu3 = view.findViewById(R.id.quiz_menu_3));
         buttonList.add(quiz_menu4 = view.findViewById(R.id.quiz_menu_4));
         quizTextView = view.findViewById(R.id.quiz_textView);
-        makeQuizList = MyfirebaseInstance.idiomsList;
-        Collections.shuffle(makeQuizList);
         correctDialog = new CorrectDialog(requireContext(), correctListener);
         incorrectDialog = new IncorrectDialog(requireContext(), incorrectListener);
+    }
+
+    private void setQuizList() {
+        makeQuizList = MyfirebaseInstance.idiomsList;
+        Collections.shuffle(makeQuizList);
     }
 
     private View.OnClickListener correctListener = new View.OnClickListener() {
@@ -143,15 +155,21 @@ public class PlayQuizFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        SimpleDateFormat format2 = new SimpleDateFormat("yyyy년 MM월 dd일 HH시mm분ss초");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH시mm분ss초");
         String format_time2 = format2.format(System.currentTimeMillis());
 
-        String key = MyfirebaseInstance.getSaveInstance().push().getKey();
-        if (key != null) {
-            MyfirebaseInstance.getSaveInstance().child(key).setValue(new SaveIdioms(key, makeQuizList, solveCounter, (makeQuizList.size() - solveCounter), format_time2));
-            MyfirebaseInstance.getSavedQuiz();
+        if (isSavedQuiz) {
+            getArguments().remove("idi");
+        } else {
+            String key = MyfirebaseInstance.getSaveInstance().push().getKey();
+            if (key != null) {
+                MyfirebaseInstance.getSaveInstance().child(key).setValue(new SaveIdioms(key, makeQuizList, solveCounter, (makeQuizList.size() - solveCounter), format_time2));
+                MyfirebaseInstance.getSavedQuiz();
+            }
+            Objects.requireNonNull(SaveViewModel.saveIdiomsMutableLiveData.getValue()).clear();
+
         }
-        Objects.requireNonNull(SaveViewModel.saveIdiomsMutableLiveData.getValue()).clear();
+
         super.onDestroy();
     }
 
@@ -168,9 +186,11 @@ public class PlayQuizFragment extends Fragment {
             if (idx == correctIndex) {
                 correctDialog.show();
                 correctDialog.settingDialogView(correctIdiom);
+                makeQuizList.remove(correctIdiom);
             } else {
                 incorrectDialog.show();
                 incorrectDialog.settingDialogView(correctIdiom, optionList.get(idx));
+                makeQuizList.remove(correctIdiom);
             }
         }
     }

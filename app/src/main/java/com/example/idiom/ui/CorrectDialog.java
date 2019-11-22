@@ -3,7 +3,6 @@ package com.example.idiom.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -45,7 +44,6 @@ public class CorrectDialog extends Dialog {
     }
 
     void settingDialogView(Idioms correctIdiom) {
-        Log.e("at dialog correct",""+correctIdiom);
         correctTitle.setText(correctIdiom.getTitle());
         correctId.setText(correctIdiom.getId());
         correctMean.setText(correctIdiom.getMean());

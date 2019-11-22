@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,12 +34,19 @@ public class CardStackViewAdapter extends RecyclerView.Adapter<CardStackViewAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CardViewHolder holder, int position) {
         Idioms idioms = mIdiomList.get(position);
         Log.e("position",""+position);
         holder.id.setText(idioms.getId());
-        holder.mean.setText(idioms.getMean());
         holder.title.setText(idioms.getTitle());
+        holder.mean.setText(idioms.getMean());
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.title.setVisibility(View.VISIBLE);
+            }
+        });
+        holder.title.setVisibility(View.GONE);
     }
 
     @Override
@@ -64,8 +72,10 @@ public class CardStackViewAdapter extends RecyclerView.Adapter<CardStackViewAdap
         TextView id;
         TextView title;
         TextView mean;
+        Button button;
         CardViewHolder(@NonNull View itemView) {
             super(itemView);
+            button = itemView.findViewById(R.id.show_title_button);
             id = itemView.findViewById(R.id.id);
             title = itemView.findViewById(R.id.title);
             mean = itemView.findViewById(R.id.mean);

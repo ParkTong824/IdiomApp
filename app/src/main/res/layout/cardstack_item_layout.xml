@@ -30,6 +30,7 @@
 
         <TextView
             android:id="@+id/title"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -48,6 +49,19 @@
             android:fontFamily="@font/nanumsquareroundb"
             android:padding="10dp"
             android:textSize="27sp" />
-
     </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/show_title_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="한글 확인하기"
+        android:fontFamily="@font/nanumsquareroundr"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        app:strokeColor="#64FFDA"/>
 </androidx.cardview.widget.CardView>
