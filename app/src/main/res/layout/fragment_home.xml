@@ -8,6 +8,12 @@
     android:background="#000000"
     tools:context=".ui.HomeFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <androidx.cardview.widget.CardView
         android:layout_margin="10dp"
         app:cardElevation="4dp"

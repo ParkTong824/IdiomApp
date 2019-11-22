@@ -21,15 +21,14 @@ public class MyfirebaseInstance {
     private static DatabaseReference myRef = database.getReference("idioms");
     private static DatabaseReference savedRef = database.getReference("saved");
     public static ArrayList<Idioms> idiomsList = new ArrayList<>();
-    public static ArrayList<SaveIdioms> saveIdiomsArrayList = new ArrayList<>();
+    private static ArrayList<SaveIdioms> saveIdiomsArrayList = new ArrayList<>();
 
-    public static DatabaseReference getSavedRef() {
+    public static void readSaveDatabase() {
         if (savedRef == null) {
             savedRef = database.getReference("saved");
             getSavedQuiz();
         }
         getSavedQuiz();
-        return savedRef;
     }
 
     public static DatabaseReference getSaveInstance() {
@@ -60,6 +59,7 @@ public class MyfirebaseInstance {
                     Idioms idioms = idiomSnapshot.getValue(Idioms.class);
                     idiomsList.add(idioms);
                 }
+                SaveViewModel.loadingDataSize.setValue(idiomsList.size());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -72,18 +72,24 @@ public class MyfirebaseInstance {
         savedRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Log.e("get key-> ",""+snapshot.getKey());
-                    SaveIdioms saveIdioms = snapshot.getValue(SaveIdioms.class);
-                    saveIdiomsArrayList.add(saveIdioms);
+                if (saveIdiomsArrayList.isEmpty()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        SaveIdioms saveIdioms = snapshot.getValue(SaveIdioms.class);
+                        saveIdiomsArrayList.add(saveIdioms);
+                    }
+                } else {
+                    saveIdiomsArrayList.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        SaveIdioms saveIdioms = snapshot.getValue(SaveIdioms.class);
+                        saveIdiomsArrayList.add(saveIdioms);
+                    }
                 }
-                Log.e("savelist size-> ",""+saveIdiomsArrayList.size());
                 SaveViewModel.saveIdiomsMutableLiveData.setValue(saveIdiomsArrayList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("data changed!!!!!","cancel!~!!!!");
+                Log.e("Save Quiz Loaded","Fail-> "+databaseError.toString());
             }
         });
     }

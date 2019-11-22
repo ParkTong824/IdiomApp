@@ -2,7 +2,6 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.idiom.R;
 import com.example.idiom.adapter.SavedQuizRecyclerAdapter;
 import com.example.idiom.model.SaveIdioms;
@@ -40,6 +40,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final LottieAnimationView lottieAnimationView = view.findViewById(R.id.loading_animation);
+        lottieAnimationView.setAnimation("loading.json");
+        lottieAnimationView.setVisibility(View.VISIBLE);
+        lottieAnimationView.loop(true);
+        lottieAnimationView.playAnimation();
+
         Button startQuizButton = view.findViewById(R.id.start_quiz_button);
         Button startStudyButton = view.findViewById(R.id.start_study_button);
         RecyclerView savedRecyclerView = view.findViewById(R.id.saved_quiz_recyclerView);
@@ -105,6 +111,15 @@ public class HomeFragment extends Fragment {
                     saveQuizTitle.setVisibility(View.GONE);
                 }
                 adapter.setSavedList(saveIdioms);
+            }
+        });
+
+        SaveViewModel.loadingDataSize.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer > 0) {
+                    lottieAnimationView.setVisibility(View.GONE);
+                }
             }
         });
     }

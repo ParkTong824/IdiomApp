@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SaveViewModel extends ViewModel {
 
     public static MutableLiveData<ArrayList<SaveIdioms>> saveIdiomsMutableLiveData = new MutableLiveData<>();
+    public static MutableLiveData<Integer> loadingDataSize = new MutableLiveData<>();
 
     public SaveViewModel() {
 

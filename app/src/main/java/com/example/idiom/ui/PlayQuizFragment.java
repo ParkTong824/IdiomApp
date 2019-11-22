@@ -2,7 +2,6 @@ package com.example.idiom.ui;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +64,11 @@ public class PlayQuizFragment extends Fragment {
             bundleIdioms = (SaveIdioms) getArguments().getSerializable("idi");
             isSavedQuiz = getArguments().getBoolean("flag");
             if (isSavedQuiz) { // 풀던 문제에서 문제 시작할때
-                Log.e("풀던거", "if!");
                 makeQuizList = bundleIdioms.quizList;
                 Idioms idioms = settingCorrect();
                 settingOptions(idioms);
             } else {
                 // 문제풀기 버튼으로 문제 시작할때
-                Log.e("문제풀기", "else!");
                 setQuizList();
                 final Idioms idioms = settingCorrect();
                 settingOptions(idioms);
@@ -159,7 +156,8 @@ public class PlayQuizFragment extends Fragment {
         String format_time2 = format2.format(System.currentTimeMillis());
 
         if (isSavedQuiz) {
-            getArguments().remove("idi");
+            MyfirebaseInstance.getSaveInstance().child(bundleIdioms.key).setValue(new SaveIdioms(bundleIdioms.key, makeQuizList, solveCounter + bundleIdioms.solvedQuiz, (bundleIdioms.quizList.size() - solveCounter), format_time2));
+            MyfirebaseInstance.getSavedQuiz();
         } else {
             String key = MyfirebaseInstance.getSaveInstance().push().getKey();
             if (key != null) {
